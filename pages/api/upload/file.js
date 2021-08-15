@@ -1,6 +1,7 @@
 import nextConn from "next-connect";
 import authMiddleware from "../../../middleware/authMiddleware";
 import multConfig from "../../../middleware/multConfig";
+import uploader from "../../../utils/cloudinary/updloader";
 
 
 const handleUpload = nextConn()
@@ -8,10 +9,22 @@ const handleUpload = nextConn()
 .use(multConfig)
 .post(async (req,res)=>{
 
-    const fl = req.file
+    const fl = req.file.img
 
-    return res.send({data:fl})
+    //return res.send(`${fl.filepath}.${fl}`)
+    return res.send(fl)
 
+    try{
+
+        const result = uploader(fl)     
+
+        return res.status(201).json({data:fl.file, result })
+
+   }catch(err){
+       throw err;
+   }
+
+    
 })
 
 export const config = {
