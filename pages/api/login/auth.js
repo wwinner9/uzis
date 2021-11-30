@@ -20,7 +20,7 @@ export default async (req,res)=>{
     
     user.password= undefined;
 
-    const token = tokenGen({id:user._id})
+    const token = tokenGen({id: user.id})
 
     return res.status(200).json({isLogged:true , data: {user,token}})
 

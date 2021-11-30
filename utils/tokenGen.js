@@ -1,13 +1,10 @@
 import jwt from 'jsonwebtoken';
 
-const hash = require('../../../config/authConfig.json')
+const hash = require('../config/authConfig.json')
 
-console.log(hash)
+export default function tokenGen(params = {}){
 
-
-export default function tokenGen(param = {}){
-
-    const token = jwt.sign(param, hash.secret, {
+    const token =  jwt.sign(params, hash.secret, {
         expiresIn:10000,
     } ) 
 
