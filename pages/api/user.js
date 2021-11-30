@@ -29,7 +29,13 @@ export default async(req,res)=>{
                 //Connect with the MongoDB
                 await connectDB()
 
-                //Encrypt the password before saving
+                //Verify if the email exist and return the user
+                const VerEmail= await User.findOne({email})
+                if(VerEmail){
+                    return res.status(400).json({err:'Email just existe , please try other'})
+                }
+
+                //Encrypt the password before saving 10 is ref the capacity of our hash code
                 const passHashed= await bcrypt.hash(password,10)
 
                 //Create a new user 
@@ -38,6 +44,9 @@ export default async(req,res)=>{
                     email,
                     password: passHashed,
                 })
+
+                newUser.password= undefined;
+
                 res.status(201).json({ success: true, data: newUser })
                 
             } catch(e){
@@ -48,6 +57,5 @@ export default async(req,res)=>{
 
             default:
                 return res.status(405).send('Not Allowed Method')
-
     }
 }          
