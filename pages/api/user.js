@@ -1,6 +1,8 @@
 import connectDB from "../../utils/mongoDb"
 import User from "../../model/user"
+
 import bcrypt from "bcrypt"
+import tokenGen from '../../utils/tokenGen';
 
 export default async(req,res)=>{
 
@@ -38,6 +40,7 @@ export default async(req,res)=>{
                 //Encrypt the password before saving 10 is ref the capacity of our hash code
                 const passHashed= await bcrypt.hash(password,10)
 
+                
                 //Create a new user 
                 const newUser = await User.create({
                     name,
@@ -47,7 +50,10 @@ export default async(req,res)=>{
 
                 newUser.password= undefined;
 
-                res.status(201).json({ success: true, data: newUser })
+                res.status(201).json({ success: true, data: {
+                    newUser ,
+                    token: tokenGen({id:newUser.id})
+                }})
                 
             } catch(e){
                 return res.status(401).send('Failed to Save Data')
