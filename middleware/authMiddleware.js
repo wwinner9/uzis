@@ -1,4 +1,4 @@
-import jwt, { decode } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 export default function (req , res , next){
 
@@ -8,7 +8,7 @@ export default function (req , res , next){
     const auths = req.headers.authorisation
 
     //Validate the existance
-    if(!auths) return res.status(401).send({error:'Not authorized'})
+    if(!auths) return res.status(401).send({error:'missing token'})
 
     //Validate the Composition
     const parts = auths.split(' ')
