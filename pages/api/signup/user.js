@@ -1,8 +1,8 @@
-import connectDB from "../../utils/mongoDb"
-import User from "../../model/user"
+import connectDB from "../../../utils/mongoDb"
+import User from "../../../model/user"
 
 import bcrypt from "bcrypt"
-import tokenGen from '../../utils/tokenGen';
+import tokenGen from '../../../utils/tokenGen';
 
 export default async(req,res)=>{
 

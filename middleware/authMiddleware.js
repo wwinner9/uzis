@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken'
-const appKey = require('../config/authConfig.json')
+
 export default function (req , res , next){
+
+    const appKey = require('../config/authConfig.json')
 
     //Validating the token 
     const auths = req.headers.authorisation
@@ -17,7 +19,7 @@ export default function (req , res , next){
 
     // Validate the part bearer //  /^Bearer$/ = regExp i set as caseSensitive .test(the el to test) 
     if(!/^Bearer$/i.test(b)) return res.status(401).send({error:'Token bad builded'})
-    console.log(b, token)
+
     jwt.verify(token, appKey.secret , (err, decoded)=>{
         if(err) return res.status(401).send({error:'Invalid Token'})
 
