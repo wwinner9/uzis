@@ -8,6 +8,5 @@ const handl = nextCon().use(authMiddleware)
     return res.end('ok')
 })
 
-
 export default handl;
 
