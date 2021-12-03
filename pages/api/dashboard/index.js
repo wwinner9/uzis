@@ -9,7 +9,7 @@ const handl = nextCon().use(authMiddleware)
     
     const userId= req.userId
 
-    const files = await fl.find({})
+    const files = await fl.find()
 
     if(!files) return res.status(404).send('There is no files ')
 

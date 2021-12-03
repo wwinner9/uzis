@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import User from '../model/user'
 
 const fileSchema = mongoose.Schema({
-    name:{
+    thumbnail:{
         required : true,
         type : String,
     },
