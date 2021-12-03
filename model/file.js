@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+//import {Schema} from 'mongodb'
 import User from '../model/user'
 
 const fileSchema = mongoose.Schema({
@@ -8,14 +9,18 @@ const fileSchema = mongoose.Schema({
     },
     url:{
         required : true,
-        type : String,
-        unique : true,
+        type : String, 
     },
     size:{
         type : String,
+        required:false,
     },
-    idUser : {
-        type: mongoose.Schema.Types.ObjectId,
+    type:{
+        type:String, 
+        default:'Image',
+    },
+    idUser:{
+        type: mongoose.Schema.Types.ObjectId ,//  Schema.type.objectId ,
         ref: 'User',
     }
 }, {timestamps : true})

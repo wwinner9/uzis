@@ -9,7 +9,7 @@ import fdb from '../../../model/file'
 const updload= nextConn().use(authMiddleware)
 .post( async (req , res) => {
 
-    const {name, size ,url} = req.body;
+    const {name, size ,url , type} = req.body;
     const idUser= req.userId;
 
     //const idExist = await User.findOne({id:idUser})
@@ -19,12 +19,28 @@ const updload= nextConn().use(authMiddleware)
         name,
         url,
         size,
+        type,
         idUser,
     }
 
-    const newFile = await Files.create(iten)
+    switch(type){
+        case 'image':
 
-    return res.send(newFile)
+            break;
+        case 'video':
+            
+            break;
+    }
+
+    try{
+        const newFile = await Files.create(iten)
+
+        return res.status(200).send({sms:'Adde',data:newFile})
+    }catch(err){
+        return res.status(400).json({sms:'Error in execution',err})
+    }
+
+    
 } )
 
 export default updload;
