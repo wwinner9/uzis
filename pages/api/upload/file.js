@@ -1,16 +1,23 @@
-import nextConn from 'next-connect';
-import authMiddleware from '../../../middleware/authMiddleware';
-import multerUploads from '../../../config/multerConfig'
-
-import Files from '../../../model/file';
-import uploader from '../../../utils/cloudinary/updloader';
+import nextConn from "next-connect";
+import authMiddleware from "../../../middleware/authMiddleware";
+import multConfig from "../../../middleware/multConfig";
 
 
-const updload= nextConn().use(multerUploads)
-.post(async (req , res) => {
+const handleUpload = nextConn()
+.use(authMiddleware)
+.use(multConfig)
+.post(async (req,res)=>{
 
-    return res.send('ok') 
-    
-} )
+    const fl = req.file
 
-export default updload;
+    return res.send({data:fl})
+
+})
+
+export const config = {
+    api: {
+      bodyParser: false
+    }
+  }
+
+export default handleUpload;
