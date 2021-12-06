@@ -8,13 +8,13 @@ import formidable from "formidable";
 export default function(req,res,next){
     const frmd = formidable({multiples:false}) 
     
-    frmd.parse(req,(err,field,file)=>{
+    frmd.parse(req,(err,field,files)=>{
         if(err){
             next(err);            
             return;
         } 
         //setting the req.file with the param file of this callback
-        req.file=file 
+        req.file=files 
         next(); // call next step || api route
         
     })

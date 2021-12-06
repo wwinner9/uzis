@@ -2,11 +2,7 @@ import mongoose from "mongoose";
 //import {Schema} from 'mongodb'
 import User from '../model/user'
 
-const fileSchema = mongoose.Schema({
-    thumbnail:{
-        required : true,
-        type : String,
-    },
+const fileSchema = mongoose.Schema({ 
     url:{
         required : true,
         type : String, 
@@ -19,7 +15,7 @@ const fileSchema = mongoose.Schema({
         type:String, 
         default:'Image',
     },
-    idUser:{
+    user:{
         type: mongoose.Schema.Types.ObjectId ,//  Schema.type.objectId ,
         ref: 'User',
     }
