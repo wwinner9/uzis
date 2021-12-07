@@ -47,24 +47,6 @@ const handleTaks = nextCon().use(authMiddleware)
         return res.status(400).json({sms:err.message})        
     }
 })
-.delete(async (req , res)=>{
-    await connectDB();
-    const {query :{id}} = req
 
-    return res.send(id)
-
-    await task.findByIdAndDelete({id})
-
-    return res.send(id)
-})
-.put(async (req , res )=>{
-    const {body,query} = req; 
-
-    const updateTask = await task.findByIdAndUpdate(query.id ,body,{
-        new:true,
-    })
-
-    return res.status(201).json({data:updateTask})
-})
 
 export default handleTaks;
