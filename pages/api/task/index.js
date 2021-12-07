@@ -6,12 +6,16 @@ import task from '../../../model/task'
 
 
 const handleTaks = nextCon().use(authMiddleware)
-.get(async (req,res)=>{
-    
+.post(async (req,res)=>{
+ 
     await connectDB();
 
     const {
-        method, body:{title,description,isDone},idUser
+        body:{
+            title,
+            description,
+            isDone
+        }, userId
     } = req;
     try{
 
@@ -21,42 +25,36 @@ const handleTaks = nextCon().use(authMiddleware)
             title,
             description,
             isDone,
-            user:idUser
+            user:userId
         })
+
         return res.status(201).json(newTask)
     }catch(err){
         return res.status(400).json({sms:err.message})        
     }
+})
+.get(async (req , res)=>{
+    
+    const {userId:id}= req; 
 
-    switch(method){
-        case 'GET':
-            try{
+    try{
+        await connectDB();
+        const tasks = await task.find({id})  
+        
+        return res.status(200).json({data:tasks})
 
-                const tasks = await task.findById({_id:idUser})       
-                
-                return res.status(200).json({data:tasks})
-
-            }catch(err){
-                return res.status(400).json({sms:err.message})        
-            }
-        case 'POST':
-            try{
-
-                if(!title || !description) return res.status(400).send('Is Missing Params');
-
-                const newTask = await task.create({
-                    title,
-                    description,
-                    isDone,
-                    user:idUser
-                })
-                return res.status(201).json(newTask)
-            }catch(err){
-                return res.status(400).json({sms:err.message})        
-            }
-        default:
-            return res.status(400).json({sms:"method not allowed"})
+    }catch(err){
+        return res.status(400).json({sms:err.message})        
     }
+})
+.put(async (req , res )=>{
+    const {body, userId : id} = req; 
+    
+    const updateTask = await task.findByIdAndUpdate(id,body,{
+        new:true,
+    })
+
+    return res.status(201).json({data:updateTask})
 })
 
 export default handleTaks;
