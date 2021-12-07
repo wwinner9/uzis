@@ -1,4 +1,4 @@
-import connectDB from "../../../utils/mongoDb"
+import {connectDB} from "../../../utils/mongoDb"
 import User from "../../../model/user"
 
 import bcrypt from "bcrypt"
@@ -29,11 +29,8 @@ export default async(req,res)=>{
 
             try{
 
-                console.log('oba')
                 //Connect with the MongoDB
-                connectDB()
-
-                console.log('oba')
+                connectDB() 
 
                 //Verify if the email exist and return the user
                 const VerEmail= await User.findOne({email})

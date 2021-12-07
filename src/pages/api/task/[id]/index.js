@@ -1,4 +1,4 @@
-import connectDB from '../../../../utils/mongoDb';
+import {connectDB} from '../../../../utils/mongoDb';
 import task from '../../../../model/task'
 
 import nextConn from 'next-connect';

@@ -2,7 +2,7 @@ import nextCon from'next-connect';
 import file from '../../../model/file'
 
 import authMiddleware from "../../../middleware/authMiddleware";
-import connectDB from '../../../utils/mongoDb';
+import {connectDB} from '../../../utils/mongoDb';
 
 
 const handl = nextCon().use(authMiddleware)
@@ -10,7 +10,7 @@ const handl = nextCon().use(authMiddleware)
     
     const userId= req.userId
 
-    await connectDB()
+    connectDB()
 
     const files = await file.find();
 

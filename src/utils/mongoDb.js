@@ -12,14 +12,13 @@ if (!MONGODB_URI) {
   )
 }
 
-
-export async function connectDB(){
+export async function connectDB(){ 
 
   if(conn.isConnected) return;
 
   const db = await connect(MONGODB_URI);
 
-  conn.isConnected= db.connections[0].readyState();
+  conn.isConnected = db.connections[0].readyState === 1 ? true: false; 
 
   console.log(db.connection.db.databaseName)
 

@@ -1,7 +1,7 @@
 import nextConn from "next-connect";
 import cloudinary from 'cloudinary';
 
-import connectDB from '../../../utils/mongoDb'
+import {connectDB} from '../../../utils/mongoDb'
 
 import fs from 'fs'
 
@@ -29,7 +29,7 @@ const handleUpload = nextConn()
 
   try{
     const stream = apiCloudinary.uploader
-    .upload_stream((error, result)=>{
+    .upload_stream(async (error, result)=>{
         if(error) return res.status(400).send('Failed to proced with the Upload')
         
         connectDB(); // Connect to MongoDB 
