@@ -28,8 +28,12 @@ export default async(req,res)=>{
                 return res.status(422).send('Please complete all fields')
 
             try{
+
+                console.log('oba')
                 //Connect with the MongoDB
-                await connectDB()
+                connectDB()
+
+                console.log('oba')
 
                 //Verify if the email exist and return the user
                 const VerEmail= await User.findOne({email})
