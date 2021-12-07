@@ -10,7 +10,8 @@ const handleOp = nextConn().use(authMiddleware)
 .delete(async (req , res)=>{
 
     console.log('ola')
-    await connectDB();
+    return;
+    connectDB();
     const {id} = req.query
 
     return res.send(id)

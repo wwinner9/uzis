@@ -1,10 +1,8 @@
 import {connect,connection} from "mongoose"
 
-const MONGODB_URI = process.env.DB_URL 
+const MONGODB_URI = process.env.DB_URL  // change the variable at local enviroment variable
 
-const conn = {
-  isConnected: false,
-}
+let cachedConn; // cache to receive our connection // facilitate in serveless connection
 
 if (!MONGODB_URI) {
   throw new Error(
@@ -12,17 +10,22 @@ if (!MONGODB_URI) {
   )
 }
 
-export async function connectDB(){ 
+export async function connectDB(){  
 
-  if(conn.isConnected) return;
+  if(cachedConn) return { db : cachedConn }; //if there is an connection will be returned
 
-  const db = await connect(MONGODB_URI);
+  //otherwise will be created with mongoose.connect 
+  const db = await connect(MONGODB_URI,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true, 
+  });
 
-  conn.isConnected = db.connections[0].readyState === 1 ? true: false; 
+  cachedConn = db; //set the cache variable with the created connection
 
-  console.log(db.connection.db.databaseName)
+  return db; 
 
 }
+
 
 connection.on('connected',()=>{
   console.log('connected')

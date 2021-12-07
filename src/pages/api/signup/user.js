@@ -13,7 +13,7 @@ export default async(req,res)=>{
 
         case "GET":
 
-            await connectDB()
+            connectDB();
             
             const users = await User.find({})// Find is any mongoDB function when empty brings all data
             return res.status(200).json({succes:true, data: users})
@@ -41,7 +41,6 @@ export default async(req,res)=>{
                 //Encrypt the password before saving 10 is ref the capacity of our hash code
                 const passHashed= await bcrypt.hash(password,10)
 
-                
                 //Create a new user 
                 const newUser = await User.create({
                     name,

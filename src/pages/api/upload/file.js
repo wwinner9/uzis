@@ -21,11 +21,18 @@ apiCloudinary.config({
 
 
 const handleUpload = nextConn()
-.use(authMiddleware)
-.use(multConfig)
+.use(authMiddleware) //use the middleware for authentication
+.use(multConfig) // Formidable config
 .post(async (req,res)=>{
 
   const file = req.file.img
+
+  /**
+   * See Cloudinary documentation 
+   * streamming = help us with the integrity of the files(video or music) 
+   * through the piratation
+   *
+   **/
 
   try{
     const stream = apiCloudinary.uploader
@@ -45,7 +52,7 @@ const handleUpload = nextConn()
         return res.status(200).send(newFile)
         //return res.status(201).json({imgUrl: result.secure_url});
     } )
-    fs.createReadStream(file.filepath).pipe(stream)
+    fs.createReadStream(file.filepath).pipe(stream) //this stream is only for reading
 
 
 

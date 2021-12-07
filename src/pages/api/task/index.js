@@ -1,21 +1,22 @@
 import nextCon from 'next-connect';
 import authMiddleware from '../../../middleware/authMiddleware';
 
-import connectDB from '../../../utils/mongoDb'
+import {connectDB} from '../../../utils/mongoDb'
 import task from '../../../model/task'
 
 
 const handleTaks = nextCon().use(authMiddleware)
 .post(async (req,res)=>{
  
-    await connectDB();
+    connectDB();
 
     const {
         body:{
             title,
             description,
             isDone
-        }, userId
+        }, 
+        userId
     } = req;
     try{
 
