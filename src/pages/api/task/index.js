@@ -45,7 +45,7 @@ const handleTaks = nextCon().use(authMiddleware)
 
     try{
         await connectDB();
-        const tasks = await task.find({id})  
+        const tasks = await task.find({user:id})  
         
         return res.status(200).json({data:tasks})
 

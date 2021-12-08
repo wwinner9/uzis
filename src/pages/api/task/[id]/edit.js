@@ -6,11 +6,18 @@ import authMiddleware from '../../../../middleware/authMiddleware';
 
 const handleEdit= nextConn().use(authMiddleware)
 .put(async (req , res )=>{
-    const {body,query} = req; 
+    const {body,query :{id}, userId} = req; 
 
     connectDB();
 
-    const updateTask = await task.findByIdAndUpdate(query.id ,body,{
+    const taskExist = await task.findOne({
+        _id : id,
+         user : userId
+    })
+
+    if(!taskExist) return res.status(401).send('Unauthorised to Update')
+
+    const updateTask = await task.findByIdAndUpdate(id ,body,{
         new:true,
     })
 
