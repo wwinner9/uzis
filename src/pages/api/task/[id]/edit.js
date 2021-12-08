@@ -4,24 +4,11 @@ import task from '../../../../model/task'
 import nextConn from 'next-connect';
 import authMiddleware from '../../../../middleware/authMiddleware';
 
-
-
-const handleOp = nextConn().use(authMiddleware)
-.delete(async (req , res)=>{
-
-    console.log('ola')
-    return;
-    connectDB();
-    const {id} = req.query
-
-    return res.send(id)
-
-    await task.findByIdAndDelete({id})
-
-    return res.send(id)
-})
+const handleEdit= nextConn().use(authMiddleware)
 .put(async (req , res )=>{
     const {body,query} = req; 
+
+    connectDB();
 
     const updateTask = await task.findByIdAndUpdate(query.id ,body,{
         new:true,
@@ -30,4 +17,4 @@ const handleOp = nextConn().use(authMiddleware)
     return res.status(201).json({data:updateTask})
 })
 
-export default handleOp;
+export default handleEdit;

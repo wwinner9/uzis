@@ -7,8 +7,6 @@ import task from '../../../model/task'
 
 const handleTaks = nextCon().use(authMiddleware)
 .post(async (req,res)=>{
- 
-    connectDB();
 
     const {
         body:{
@@ -18,6 +16,13 @@ const handleTaks = nextCon().use(authMiddleware)
         }, 
         userId
     } = req;
+ 
+    connectDB();
+
+    const taskExist = await task.findOne({user:userId ,title})
+
+    if(taskExist) return res.status(400).send('Taks title already exist')
+
     try{
 
         if(!title || !description) return res.status(400).send('Is Missing Params');
