@@ -14,7 +14,7 @@ export default function Home({data}) {
       <ul>
         {
           data.map((item) => (
-            <li key={item.id}>
+            <li key={item._id}>
               <a href={item.url}>{item.url}</a>
               <img src={item.url} width='100' height='100'></img>
             </li>
@@ -29,17 +29,22 @@ export default function Home({data}) {
 
 export const getServerSideProps = async (ctx)=>{
 
-  const res = await fetch('http://localhost:3000/api/dashboard',{
-    method:'GET',
-    headers:{
-      "authorisation":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYWZlNTMxYTI0M2I2YWU4YmQ5NzMyMCIsImlhdCI6MTYzOTI2NDE3NywiZXhwIjoxNjM5Mjc0MTc3fQ.TZQSF_SyyC552v4qNLcA5sDjOYxD3fiV0oK7pbSGAE0"
-    }
-  })
-  const resJson = await res.json();
+  const {token} = ctx.req.cookies; // Get the token with js-cookies to facilitate with auth 
 
-  return {
-    props:{
-      data:resJson
+  try{
+    const res = await fetch('http://localhost:3000/api/dashboard',{
+      method:'GET',
+      headers:{
+        "authorisation":`${token}` 
+      }
+    })
+    const resJson = await res.json();
+    return {
+      props:{
+        data:resJson
+      }
     }
+  }catch(err){
+    return console.log(err)
   }
 }
