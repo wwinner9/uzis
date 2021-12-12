@@ -1,6 +1,11 @@
-import { useState } from "react";
+import Cookies from "js-cookie";
+import { useRouter } from "next/dist/client/router";
+import {useState } from "react";
+
 
 export default function login(){
+
+    const router = useRouter();
     
     const [credencials, setCredencials]= useState({
         email:'',
@@ -19,26 +24,41 @@ export default function login(){
 
     const handleChanges = (e) => setCredencials({...credencials, [e.target.name]: e.target.value})
 
-    function handleSubmit(e){
+    const handleSubmit = async (e) =>{
         e.preventDefault();
 
         let errors = validate();
 
         if(Object.keys(errors).length) return setError(errors)
 
-           
+        const resp = await auth(); 
+
+        if(resp === undefined) return console.log('bad')
+
+        const {token} = await resp.data;
+
+        Cookies.set('token', `Bearer ${token}`);
+
+        router.push(`/`)       
 
     }
 
 
-    export const auth = async (ctx) => {
-        const res = await fetch('http://localhost:3000/api/login/auth',{
-            method:'POST',
-            body:{
-                
-            }
-        })
-
+    const auth = async () => {
+        try{
+            const res = await fetch('http://localhost:3000/api/login/auth',{
+                method:'POST',
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body: JSON.stringify(credencials)
+            })    
+            const resJson = await res.json();
+            return {data : resJson.data}
+    
+        }catch(err){
+            console.log(err.message)
+        }
     }
 
 
