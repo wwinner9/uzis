@@ -2,6 +2,8 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/dist/client/router";
 import {useState } from "react";
 
+import styles from '../styles/pages/login.module.css'
+
 
 export default function login(){
 
@@ -28,7 +30,6 @@ export default function login(){
         e.preventDefault();
 
         let errors = validate();
-
         if(Object.keys(errors).length) return setError(errors)
 
         const resp = await auth(); 
@@ -36,11 +37,9 @@ export default function login(){
         if(resp === undefined) return console.log('bad')
 
         const {token} = await resp.data;
-
         Cookies.set('token', `Bearer ${token}`);
 
         router.push(`/`)       
-
     }
 
 
@@ -54,16 +53,14 @@ export default function login(){
                 body: JSON.stringify(credencials)
             })    
             const resJson = await res.json();
-            return {data : resJson.data}
-    
+            return {data : resJson.data}    
         }catch(err){
             console.log(err.message)
         }
     }
 
-
     return(
-        <>
+        <div className={styles.login}>
             <form action="" method="post" onSubmit={handleSubmit}>
                 <h2>Login</h2>
                 <input 
@@ -84,7 +81,7 @@ export default function login(){
                 />
                 <input type="submit" value="Connect" id='btnSubmit'/>
             </form>           
-        </>
+        </div>
     );
 }
 
