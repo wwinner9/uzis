@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import User from '../../../model/user'
+import { connectDB } from '../../../utils/mongoDb';
 
 import tokenGen from '../../../utils/tokenGen';
 
@@ -9,19 +10,29 @@ export default async (req,res)=>{
 
     const {email, password} = req.body;
 
-    const user = await User.findOne({email}).select('+password');
+    try{
 
-    if(!user) 
-        return res.status(400).send('User not found')
+        connectDB();
+
+        const user = await User.findOne({email}).select('+password');
+
+        if(!user) 
+            return res.status(400).send('User not found')
+        
+        const isPasswordEqual = await bcrypt.compare(password,user.password)
     
-    const isPasswordEqual = await bcrypt.compare(password,user.password)
-
-    if(!isPasswordEqual) return res.status(400).send('Invalid Password')
+        if(!isPasswordEqual) return res.status(400).send('Invalid Password')
+        
+        user.password= undefined;
     
-    user.password= undefined;
+        const token = tokenGen({id: user.id})
+    
+        return res.status(200).json({isLogged:true , data: {user,token}})
 
-    const token = tokenGen({id: user.id})
+    }catch(err){
+        return res.status(400).send(err.message)
+    }
 
-    return res.status(200).json({isLogged:true , data: {user,token}})
+    
 
 }

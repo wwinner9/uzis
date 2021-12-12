@@ -10,14 +10,18 @@ const handl = nextCon().use(authMiddleware)
     
     const userId= req.userId
 
-    connectDB()
+    try{
+        connectDB()
 
-    const files = await file.find();
-
-    if(!files) return res.status(404).send('There is no files ')
-
-    return res.status(200).send(files)
-
+        const files = await file.find();
+    
+        if(!files) return res.status(404).send('There is no files ')
+    
+        return res.status(200).send(files)
+    
+    }catch(err){
+        return res.status(400).send(err.message)
+    }
 })
 
 export default handl;
