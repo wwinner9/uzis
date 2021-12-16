@@ -39,7 +39,25 @@
     border-radius: 50%;
     border: 1px solid var(--blue);
     position: absolute;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mainColor);
+    font-size: 1.3rem;
 }
+
+
+.icon0 a
+,.icon1 a
+,.icon2 a
+,.icon3 a
+,.icon4 a{
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
 
 .icon0{
     top: 0;
