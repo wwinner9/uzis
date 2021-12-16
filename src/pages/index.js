@@ -1,7 +1,8 @@
 import Head from 'next/head' 
-import styles from '../styles/Home.module.css' 
 
 export default function Home({data}) {
+
+  if(data.id == null) return (<h1>No data Found</h1>);
 
   return (
     <div className={styles.container}>

@@ -4,6 +4,8 @@ import {useState } from "react";
 
 import styles from '../styles/pages/login.module.css'
 
+import Roadfile from '../components/roadfile'
+
 
 export default function login(){
 
@@ -36,10 +38,10 @@ export default function login(){
 
         if(resp === undefined) return console.log('bad')
 
-        const {token} = await resp.data;
-        Cookies.set('token', `Bearer ${token}`);
+        const {token} = await resp.data; // Get the token from data
+        Cookies.set('token', `Bearer ${token}`); // Cookies to share it though all the app
 
-        router.push(`/`)       
+        router.push(`/`)  // go to home      
     }
 
 
@@ -50,7 +52,7 @@ export default function login(){
                 headers:{
                     "Content-Type":"application/json",
                 },
-                body: JSON.stringify(credencials)
+                body: JSON.stringify(credencials) //Convert string in to json 
             })    
             const resJson = await res.json();
             return {data : resJson.data}    
@@ -61,6 +63,9 @@ export default function login(){
 
     return(
         <div className={styles.login}>
+
+            <Roadfile/>
+
             <form action="" method="post" onSubmit={handleSubmit}>
                 <h2>Login</h2>
                 <input 

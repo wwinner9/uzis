@@ -1,16 +1,28 @@
-html,
-body {
+:root{
+  --mainColor: #D4347E;
+  --uzisGreen: #9ED54B;
+  --backGround: #222424;
+  --loginColor: #B4DF22;
+  --createColor: #8DD862;
+  --text01:rgb(189, 168, 168);
+  --blue : rgba(93, 102, 228, 0.333);
+}
+
+* {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body{
+  background-color: #222424;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen;
+  height: 100vh;
+  overflow-y: hidden;
+
 }
 
 a {
   color: inherit;
   text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
 }

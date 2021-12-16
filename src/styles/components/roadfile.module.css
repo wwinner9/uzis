@@ -1,0 +1,71 @@
+.road{
+    position: relative;
+    width: 10rem;
+    height: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: road 10s linear infinite ;
+    animation-play-state: paused;
+    
+
+}
+
+@keyframes road {
+    0% {
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+    
+}
+
+.circle{
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+    border: 1px solid var(--loginColor);
+
+}
+
+.icon0 
+,.icon1 
+,.icon2 
+,.icon3 
+,.icon4{
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    border: 1px solid var(--blue);
+    position: absolute;
+}
+
+.icon0{
+    top: 0;
+    left: 40%;
+}
+
+.icon1{
+
+    top: 40%;
+    right: 0;
+}
+
+.icon2{
+
+    top: 40%;
+    left: 0;
+}
+
+.icon3{
+
+    bottom: 0;
+    left: 40%;
+}
+
+.icon4{
+
+    top: 38%;
+    left: 38%;
+}
