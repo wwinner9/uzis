@@ -7,7 +7,6 @@ import tokenGen from '../../../utils/tokenGen';
 export default async (req,res)=>{
 
     // email and password 
-
     const {email, password} = req.body;
 
     try{

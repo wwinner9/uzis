@@ -1,5 +1,7 @@
 import Head from 'next/head' 
 
+import styles from '../styles/pages/index'
+
 export default function Home({data}) {
 
   if(data.id == null) return (<h1>No data Found</h1>);
@@ -29,7 +31,7 @@ export default function Home({data}) {
 }
 
 export const getServerSideProps = async (ctx)=>{
-
+  
   const {token} = ctx.req.cookies; // Get the token with js-cookies to facilitate with auth 
 
   try{

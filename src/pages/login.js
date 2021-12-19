@@ -34,9 +34,10 @@ export default function login(){
         let errors = validate();
         if(Object.keys(errors).length) return setError(errors)
 
+        
         const resp = await auth(); 
 
-        if(resp === undefined) return console.log('bad')
+        if(resp === undefined) return ;
 
         const {token} = await resp.data; // Get the token from data
         Cookies.set('token', `Bearer ${token}`); // Cookies to share it though all the app
