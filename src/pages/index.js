@@ -1,6 +1,8 @@
 import Head from 'next/head' 
 
-import styles from '../styles/pages/index'
+import Roadcircle from '../components/roadfile'
+
+// import styles from '../styles/pages/globals.css'
 
 export default function Home({data}) {
 
@@ -15,6 +17,7 @@ export default function Home({data}) {
       </Head>
 
       <ul>
+      <Roadcircle/>
         {
           data.map((item) => (
             <li key={item._id}>
